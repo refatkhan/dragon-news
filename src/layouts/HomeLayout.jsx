@@ -5,6 +5,7 @@ import LatestNews from '../components/LatestNews';
 import Navbar from '../components/Navbar';
 import Leftaside from '../components/HomeLayout/Leftaside';
 import RightAside from '../components/HomeLayout/RightAside';
+import FindUs from '../components/HomeLayout/FindUs';
 
 const HomeLayout = () => {
     return (
@@ -19,16 +20,18 @@ const HomeLayout = () => {
                 </nav>
             </header>
 
-            <main className='w-11/12 mx-auto my-3 grid grid-cols-12'>
+            <main className='w-11/12 mx-auto gap-5 my-3 grid grid-cols-12'>
                 <aside className='col-span-3'>
                     <Leftaside></Leftaside>
                 </aside>
-                <section className="main col-span-6">
+                <section className="main col-span-6 ">
                     <Outlet></Outlet>
                 </section>
 
                 <aside className='col-span-3'>
-                    <RightAside/>
+                    <RightAside>
+                        
+                    </RightAside>
                 </aside>
             </main>
         </div>
