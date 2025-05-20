@@ -15,3 +15,7 @@
  *{
     font-family: "Poppins", sans-serif;
  }
+ a.active{
+  @apply bg-red-700
+ text-white
+ }
