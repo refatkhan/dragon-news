@@ -1,29 +1,68 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link } from 'react-router';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Register = () => {
+    const { createUser , setUser } = use(AuthContext)
+
+    const handleRegister = e => {
+        e.preventDefault();
+        const name = e.target.name.value
+        const photo = e.target.photo.value
+        const email = e.target.email.value
+        const password = e.target.password.value
+        console.log(name, photo, email, password);
+        createUser(email, password)
+            .then(result => {
+                const user = result.user;
+                setUser(user)
+            }).catch((error) => {
+                const errorMessage = error.message;
+                console.log(errorMessage);
+            });
+    }
+
     return (
         <div className='flex justify-center min-h-screen items-center'>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                 <h2 className='font-semibold text-2xl py-5 text-center
                 '>Register Your Account</h2>
                 <div className="card-body">
-                    <fieldset className="fieldset">
+                    <form onSubmit={handleRegister}>
                         {/* name */}
                         <label className="label">Enter Your Name</label>
-                        <input type="name" className="input" placeholder="jhon deo" />
+                        <input type="text"
+                            name='name'
+                            className="input"
+                            placeholder="jhon deo"
+                            required
+                        />
                         {/* photo  url  */}
                         <label className="label">Photo Url</label>
-                        <input type="photo" className="input" placeholder="photo url" />
+                        <input type="text"
+                            name='photo'
+                            className="input"
+                            placeholder="photo url"
+                            required
+                        />
                         {/* email  */}
                         <label className="label">Email</label>
-                        <input type="email" className="input" placeholder="Email" />
+                        <input type="email"
+                            className="input"
+                            placeholder="Email"
+                            name='email'
+                            required />
                         <label className="label">Password</label>
-                        <input type="password" className="input" placeholder="Password" />
+                        <input type="password"
+                            className="input"
+                            placeholder="Password"
+                            name='password'
+                            required
+                        />
 
-                        <button className="btn btn-neutral mt-4">Register</button>
+                        <button type='submit' className="btn btn-neutral mt-4">Register</button>
                         <p className='py-3 font-semibold'>Already Have An Account ? <Link className='text-secondary' to="/auth/login">Log In</Link></p>
-                    </fieldset>
+                    </form>
 
                 </div>
             </div>
