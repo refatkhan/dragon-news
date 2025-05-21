@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Authentication from "../layouts/Authentication";
 import NewsDetails from "../pages/NewsDetails";
+import PrivateRoute from "../provider/PrivateRoute";
 const router = createBrowserRouter(
     [
         {
@@ -26,22 +27,26 @@ const router = createBrowserRouter(
         },
         {
             path: '/auth',
-            element: <Authentication/>,
+            element: <Authentication />,
             children: [
                 {
                     path: "login",
                     element: <Login></Login>,
                 },
                 {
-                    path:"registration",
-                    element:<Register></Register>
+                    path: "registration",
+                    element: <Register></Register>
                 }
             ]
         },
         {
             path: '/news-details/:id',
-            element: <NewsDetails></NewsDetails>,
-            loader: ()=> fetch("/news.json")
+            element: (
+                <PrivateRoute>
+                    <NewsDetails></NewsDetails>
+                </PrivateRoute>
+            ),
+            loader: () => fetch("/news.json")
         },
         {
             path: '/*',

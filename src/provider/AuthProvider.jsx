@@ -6,17 +6,21 @@ export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const createUser = (email, password) => {
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
     const logIn = (email, password) => {
+        
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user);
-                
+                alert(`hey ${user.email}, you account log in`)
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -35,6 +39,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
+            setLoading(false)
         });
         return () => {
             unsubscribe();
@@ -45,7 +50,9 @@ const AuthProvider = ({ children }) => {
         setUser,
         createUser,
         logOut,
-        logIn
+        logIn,
+        loading,
+        setLoading
     }
     return (
         <div>
